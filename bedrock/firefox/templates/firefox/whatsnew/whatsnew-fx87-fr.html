@@ -1,0 +1,113 @@
+{# This Source Code Form is subject to the terms of the Mozilla Public
+ # License, v. 2.0. If a copy of the MPL was not distributed with this
+ # file, You can obtain one at http://mozilla.org/MPL/2.0/. -#}
+
+{% extends "firefox/whatsnew/base.html" %}
+
+{% block page_title %}What’s new with Firefox{% endblock %}
+
+{#- This will appear as <meta property="og:description"> which can be used for social share -#}
+{% block page_og_desc %}What’s new with Firefox{% endblock %}
+
+{% block body_id %}firefox-whatsnew{% endblock %}
+{% block body_class %}{% endblock %}
+
+{% block page_css %}
+  {{ css_bundle('firefox_whatsnew_87_eu_vpn') }}
+{% endblock %}
+
+{% block site_header %}{% endblock %}
+
+{% block content %}
+<main class="content-wrapper mzp-t-firefox">
+  {% include 'firefox/whatsnew/includes/header.html' %}
+
+  <section class="wnp-content-main">
+    <div class="mzp-l-content mzp-t-content-md">
+      <form id="newsletter-form" class="mzp-c-newsletter-form" action="{{ url('products.vpn.invite.waitlist') }}" method="post">
+        <img class="wnp-main-image" src="{{ static('img/firefox/whatsnew/whatsnew82/vpn-logo.svg') }}" width="120" alt="">
+        <h1 class="wnp-main-title"><strong>Mozilla VPN</strong> will be available in France soon.</h1>
+        <h2 class="wnp-main-subtitle">Join the waiting list now.</h2>
+        <p class="wnp-main-tagline">Get even more privacy while surfing, streaming, gaming, and working. Mozilla VPN hides your IP address, protecting your identity and location.</p>
+        <p class="wnp-main-tagline"><strong>Join the waitlist and be notified immediately when Mozilla VPN is available for your region.</strong></p>
+
+        {{ newsletter_form.newsletters|safe }}
+        <input type="hidden" name="source_url" value="{{ request.build_absolute_uri() }}">
+        <input type="hidden" name="lang" id="id_lang" value="en">
+        <input type="hidden" name="privacy" id="id_privacy" value="true">
+        <input type="hidden" name="fmt" id="format-html" value="H">
+
+        <fieldset class="mzp-c-newsletter-content">
+          <div class="mzp-c-form-errors" id="newsletter-errors"></div>
+
+          <div>
+            <label for="id_email">
+              Enter your email address here.
+            </label>
+            <input type="email" class="mzp-js-email-field" id="id_email" name="email" required aria-required="true" placeholder="yourname@example.com">
+          </div>
+
+          <div id="newsletter-details" class="mzp-c-newsletter-details">
+            <label for="id_country">
+              Which country do you live in?
+            </label>
+            {{ newsletter_form.country|safe }}
+          </div>
+
+          <p class="mzp-c-form-submit">
+            <button class="mzp-c-button mzp-t-product mzp-t-xl" id="newsletter-submit" type="submit">Notify me</button>
+          </p>
+
+          <div class="vpn-invite-privacy">
+            <p>By clicking “Notify me” you agree to our <a href="{{ url('privacy.notices.mozilla-vpn') }}">Privacy Policy</a>.</p>
+
+            <p>Your information will only be used to notify you about platform availability.</p>
+          </div>
+        </fieldset>
+      </form>
+
+      <div id="newsletter-thanks" class="vpn-invite-success">
+        <h3>Danke! Du stehst auf der Liste.</h3>
+        <p>Sobald Mozilla VPN für deine Region verfügbar ist, werden wir dich per E-Mail informieren.</p>
+        <p>Mozilla VPN ist derzeit für Windows 10, Mac, Android, iOS und Linux-Geräte in den USA, Großbritannien, Kanada, Neuseeland, Singapur und Malaysia verfügbar.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="wnp-more mzp-l-content mzp-t-content-xl">
+    <h2 class="wnp-main-subtitle"><a href="{{ url('products.vpn.landing') }}">Find out more about Mozilla VPN.</a></h2>
+
+    <div class="l-columns-two">
+      <div class="c-picto-block">
+        <div class="c-picto-block-image">
+          {% include 'firefox/whatsnew/includes/fx82/illo-vpn-laptop.svg' %}
+        </div>
+        <h3 class="c-picto-block-title">Fast and secure network</h3>
+        <div class="c-picto-block-body">
+          <p>Our <a href="https://mullvad.net/help/why-wireguard/">WireGuard</a>® powered servers are built for speed so you can stream, download, and game as usual.</p>
+        </div>
+      </div>
+
+      <div class="c-picto-block">
+        <div class="c-picto-block-image">
+          {% include 'firefox/whatsnew/includes/fx82/illo-vpn-mobile.svg' %}
+        </div>
+        <h3 class="c-picto-block-title">Internet without a trace</h3>
+        <div class="c-picto-block-body">
+          <p>We encrypt your network activity and hide your IP address. We never log, track, or share your network data.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <aside class="mzp-l-content c-utilities">
+    {% set releasenotes_url = url('firefox.releases.index') if not version else '/firefox/%s/releasenotes/'|format(version) %}
+    <p>{{ ftl('whatsnew-release-notes', url=releasenotes_url) }}</p>
+  </aside>
+
+</main>
+{% endblock %}
+
+{% block js %}
+  {{ js_bundle('firefox_whatsnew_87_eu_vpn') }}
+{% endblock %}
